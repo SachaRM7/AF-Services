@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Remplacer le domaine par le domaine définitif avant mise en production -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://af-nettoyage.netlify.app/</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/prestations</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/zone-intervention</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/devis</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/contact</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/mentions-legales</loc></url>
-  <url><loc>https://af-nettoyage.netlify.app/confidentialite</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/prestations</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/zone-intervention</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/devis</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/contact</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/mentions-legales</loc></url>
+  <url><loc>https://afnettoyage.netlify.app/confidentialite</loc></url>
 </urlset>

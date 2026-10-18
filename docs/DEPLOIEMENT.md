@@ -9,14 +9,19 @@
    - `supabase/migrations/20261017000003_security.sql` (RLS, droits, buckets `chantiers` et `documents`)
    - puis `supabase/seed.sql`.
 3. **Authentication → Providers → Email** : désactiver « Allow new users to sign up ». Les comptes sont créés uniquement par invitation.
-4. **Authentication → URL configuration** : *Site URL* = URL du site ; ajouter `https://<domaine>/admin/reinitialiser` aux *Redirect URLs*.
+4. **Authentication → URL configuration** :
+   - *Site URL* : `https://afnettoyage.netlify.app`
+   - *Redirect URLs* : ajouter `https://afnettoyage.netlify.app/admin/reinitialiser` (et `http://localhost:5173/admin/reinitialiser` pour le développement).
+   Si l'adresse de retour n'est pas dans cette liste, Supabase renvoie vers la *Site URL* : l'application redirige alors
+   d'elle-même vers `/admin/reinitialiser` en conservant le jeton, mais l'ajouter évite ce détour.
+   Les modèles d'e-mail par défaut (`{{ .ConfirmationURL }}`) conviennent ; ne pas les remplacer par `{{ .SiteURL }}`.
 5. Créer les deux administrateurs :
    ```sql
    insert into public.admin_allowlist (email, full_name) values
      ('adel@…', 'Adel Ferchichi'),
      ('administration@…', 'Prénom Nom');
    ```
-   Puis **Authentication → Users → Invite user** pour chaque adresse. Le profil administrateur est créé automatiquement à la création du compte (trigger `on_auth_user_created`). Une adresse absente de la liste obtient un compte sans aucun accès aux données.
+   Puis **Authentication → Users → Invite user** pour chaque adresse (le lien d'invitation ouvre aussi la page de choix du mot de passe). Le profil administrateur est créé automatiquement à la création du compte (trigger `on_auth_user_created`). Une adresse absente de la liste obtient un compte sans aucun accès aux données.
    Pour retirer un accès : `update public.profiles set active = false where email = '…';`
 6. Récupérer dans **Project settings → API** : l'URL, la clé `anon` (publique) et la clé `service_role` (secrète).
 
@@ -54,3 +59,9 @@
 - Photos et PDF sont dans des buckets **privés**, servis par URL signées d'une heure.
 - Le formulaire public conserve une empreinte salée de l'IP (quota anti-abus), jamais l'IP.
 - Durées de conservation indiquées sur `/confidentialite` : purger périodiquement les demandes sans suite de plus de 3 ans et les photos de plus de 2 ans (SQL Editor / Storage).
+
+## 6. Mot de passe oublié
+
+1. `/admin/mot-de-passe-oublie` : saisir l'adresse ; Supabase envoie un lien valable une heure, utilisable une seule fois.
+2. Le lien ouvre `/admin/reinitialiser` : choisir le nouveau mot de passe (12 caractères minimum), puis « Accéder à l'espace de gestion ».
+3. Lien expiré ou déjà utilisé : la page l'indique et propose d'en recevoir un nouveau.

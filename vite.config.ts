@@ -8,6 +8,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 1600,
   },
   test: {
-    include: ["src/**/*.test.ts", "netlify/**/*.test.ts"],
+    include: ["src/**/*.test.{ts,tsx}", "netlify/**/*.test.ts"],
   },
 } as never);
