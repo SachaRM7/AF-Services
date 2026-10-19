@@ -34,7 +34,7 @@ export interface SubmissionResult {
 }
 
 export async function submitPublicForm(payload: PublicSubmission): Promise<SubmissionResult> {
-  const res = await fetch("/.netlify/functions/submit-request", {
+  const res = await fetch("/api/submit-request", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
