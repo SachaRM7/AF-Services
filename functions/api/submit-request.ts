@@ -24,7 +24,7 @@ async function verifyTurnstile(token: string | undefined, ip: string, env: Env):
   return Boolean(data.success);
 }
 
-export async function onRequestPost({ request: req, env }: { request: Request; env: Env }): Promise<Response> {
+export async function handleSubmission(req: Request, env: Env): Promise<Response> {
   if (req.method !== "POST") return json(405, { error: "Méthode non autorisée." });
 
   const url = env.SUPABASE_URL;
