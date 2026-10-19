@@ -20,7 +20,7 @@ async function verifyTurnstile(token: string | undefined, ip: string, env: Env):
     method: "POST",
     body: new URLSearchParams({ secret, response: token, remoteip: ip }),
   });
-  const data = (await res.json()) as { success?: boolean }
+  const data = (await res.json()) as { success?: boolean };
   return Boolean(data.success);
 }
 
@@ -76,7 +76,7 @@ export async function onRequestPost({ request: req, env }: { request: Request; e
   const uploads: { path: string; token: string }[] = [];
   for (const [i, p] of photos.entries()) {
     const ext = p.type === "image/png" ? "png" : p.type === "image/webp" ? "webp" : p.type.startsWith("image/hei") ? "heic" : "jpg";
-    const path = `demandes/${inserted.id}/${i + 1}-${randomUUID().slice(0, 8)}.${ext}`;
+    const path = `demandes/${inserted.id}/${i + 1}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
     const { data: signed, error: signErr } = await db.storage.from("chantiers").createSignedUploadUrl(path);
     if (signErr || !signed) continue;
     await db.from("attachments").insert({
@@ -92,4 +92,4 @@ export async function onRequestPost({ request: req, env }: { request: Request; e
   }
 
   return json(201, { id: inserted.id, uploads });
-};
+}
